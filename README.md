@@ -1,5 +1,5 @@
 # slack-dump
-Generate an export of Channel and / or Private Group history and export it as a ZIP file compatible with Slack's import tool.
+Generate an export of Channel, Private Group and / or Direct Message history and export it as a ZIP file compatible with Slack's import tool.
 
 ## Usage
 
@@ -7,16 +7,17 @@ Generate an export of Channel and / or Private Group history and export it as a 
 $ slack-dump -h
 
 NAME:
-   slack-dump - export channel and group history to the Slack export format
+   slack-dump - export channel, group and direct message history to the Slack export format
 
 USAGE:
    slack-dump [global options] command [command options] [arguments...]
 
 VERSION:
-   0.0.1
+   0.0.2
 
 AUTHOR(S):
    Joe Fitzgerald <jfitzgerald@pivotal.io>
+   Sunyong Lim <dicebattle@gmail.com>
 
 COMMANDS:
    help, h	Shows a list of commands or help for one command
