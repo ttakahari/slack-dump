@@ -27,7 +27,7 @@ func check(e error) {
 func main() {
 	app := cli.NewApp()
 	app.Name = "slack-dump"
-	app.Usage = "export channel and group history to the Slack export format"
+	app.Usage = "export channel and group history to the Slack export format include Direct message"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:   "token, t",
@@ -36,9 +36,9 @@ func main() {
 			EnvVar: "SLACK_API_TOKEN",
 		},
 	}
-	app.Author = "Joe Fitzgerald"
-	app.Email = "jfitzgerald@pivotal.io"
-	app.Version = "0.0.1"
+	app.Author = "Joe Fitzgerald, Sunyong Lim"
+	app.Email = "jfitzgerald@pivotal.io, dicebattle@gmail.com"
+	app.Version = "0.0.2"
 	app.Action = func(c *cli.Context) {
 		token := c.String("token")
 		if token == "" {
@@ -104,6 +104,17 @@ func dumpUsers(api *slack.Client, dir string) {
 	check(err)
 	err = ioutil.WriteFile(path.Join(dir, "users.json"), data, 0644)
 	check(err)
+	ims, err := api.GetIMChannels()
+	//fmt.Println(ims)
+
+	for _, im := range ims {
+		for _, user := range users {
+			if im.User == user.ID{
+				fmt.Println("dump DM with " + user.Name)
+				dumpChannel(api, dir, im.ID, user.Name, "dm")
+			}
+		}
+	}
 }
 
 func dumpRooms(api *slack.Client, dir string, rooms []string) {
@@ -199,6 +210,8 @@ func dumpChannel(api *slack.Client, dir, id, name, channelType string) {
 	var messages []slack.Message
 	if channelType == "group" {
 		messages = fetchGroupHistory(api, id)
+	} else if channelType == "dm" {
+		messages = fetchDirectMessageHistory(api, id)
 	} else {
 		messages = fetchChannelHistory(api, id)
 	}
@@ -283,6 +296,37 @@ func fetchChannelHistory(api *slack.Client, ID string) []slack.Message {
 
 		historyParams.Latest = latest
 		history, err = api.GetChannelHistory(ID, historyParams)
+		check(err)
+		length := len(history.Messages)
+		if length > 0 {
+			latest = history.Messages[length-1].Timestamp
+			messages = append(messages, history.Messages...)
+		}
+
+	}
+
+	return messages
+}
+
+func fetchDirectMessageHistory(api *slack.Client, ID string) []slack.Message {
+	historyParams := slack.NewHistoryParameters()
+	historyParams.Count = 1000
+
+	// Fetch History
+	history, err := api.GetIMHistory(ID, historyParams)
+	check(err)
+	messages := history.Messages
+	if len(messages) == 0 {
+		return messages
+	}
+	latest := messages[len(messages)-1].Timestamp
+	for {
+		if history.HasMore != true {
+			break
+		}
+
+		historyParams.Latest = latest
+		history, err = api.GetIMHistory(ID, historyParams)
 		check(err)
 		length := len(history.Messages)
 		if length > 0 {
