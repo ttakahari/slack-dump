@@ -215,11 +215,15 @@ func dumpGroups(api *slack.Client, dir string, rooms []string) []slack.Group {
 
 func dumpChannel(api *slack.Client, dir, id, name, channelType string) {
 	var messages []slack.Message
+	var fileName string
 	if channelType == "group" {
+		fileName = path.Join("private_channel", name)
 		messages = fetchGroupHistory(api, id)
 	} else if channelType == "dm" {
+		fileName = path.Join("direct_message", name)
 		messages = fetchDirectMessageHistory(api, id)
 	} else {
+		fileName = path.Join("channel", name)
 		messages = fetchChannelHistory(api, id)
 	}
 
@@ -242,7 +246,7 @@ func dumpChannel(api *slack.Client, dir, id, name, channelType string) {
 
 		currentMessages = append(currentMessages, message)
 	}
-	writeMessagesFile(currentMessages, dir, name, currentFilename)
+	writeMessagesFile(currentMessages, dir, fileName, currentFilename)
 }
 
 func writeMessagesFile(messages []slack.Message, dir string, name string, filename string) {
