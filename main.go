@@ -97,6 +97,7 @@ func MarshalIndent(v interface{}, prefix string, indent string) ([]byte, error) 
 }
 
 func dumpUsers(api *slack.Client, dir string) {
+	fmt.Println("dump user information")
 	users, err := api.GetUsers()
 	check(err)
 
@@ -104,6 +105,8 @@ func dumpUsers(api *slack.Client, dir string) {
 	check(err)
 	err = ioutil.WriteFile(path.Join(dir, "users.json"), data, 0644)
 	check(err)
+
+	fmt.Println("dump direct message")
 	ims, err := api.GetIMChannels()
 	//fmt.Println(ims)
 
@@ -119,9 +122,11 @@ func dumpUsers(api *slack.Client, dir string) {
 
 func dumpRooms(api *slack.Client, dir string, rooms []string) {
 	// Dump Channels
+	fmt.Println("dump public channel")
 	channels := dumpChannels(api, dir, rooms)
 
 	// Dump Private Groups
+	fmt.Println("dump private channel")
 	groups := dumpGroups(api, dir, rooms)
 
 	if len(groups) > 0 {
@@ -174,6 +179,7 @@ func dumpChannels(api *slack.Client, dir string, rooms []string) []slack.Channel
 	}
 
 	for _, channel := range channels {
+		fmt.Println("dump channel " + channel.Name)
 		dumpChannel(api, dir, channel.ID, channel.Name, "channel")
 	}
 
@@ -200,6 +206,7 @@ func dumpGroups(api *slack.Client, dir string, rooms []string) []slack.Group {
 	}
 
 	for _, group := range groups {
+		fmt.Println("dump channel " + group.Name)
 		dumpChannel(api, dir, group.ID, group.Name, "group")
 	}
 
