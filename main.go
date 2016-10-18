@@ -1,12 +1,15 @@
 package main
 
 import (
+	"archive/zip"
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -14,7 +17,6 @@ import (
 	"unicode/utf8"
 
 	"github.com/codegangsta/cli"
-	"github.com/jhoonb/archivex"
 	"github.com/nlopes/slack"
 )
 
@@ -71,13 +73,54 @@ func main() {
 	app.Run(os.Args)
 }
 
-func archive(dir string) {
-	zip := new(archivex.ZipFile)
+func archive(inFilePath string) {
 	pwd, err := os.Getwd()
 	check(err)
-	zip.Create(path.Join(pwd, "slackdump.zip"))
-	zip.AddAll(dir, true)
-	zip.Close()
+
+	ts := time.Now().Format("20060102150405")
+	outZipPath := path.Join(pwd, fmt.Sprintf("slackdump-%s.zip", ts))
+
+	outZip, err := os.Create(outZipPath)
+	check(err)
+	defer outZip.Close()
+
+	zipWriter := zip.NewWriter(outZip)
+	defer zipWriter.Close()
+
+	basePath := filepath.Dir(inFilePath)
+
+	err = filepath.Walk(inFilePath, func(filePath string, fileInfo os.FileInfo, err error) error {
+		if err != nil || fileInfo.IsDir() {
+			return err
+		}
+
+		relativeFilePath, err := filepath.Rel(basePath, filePath)
+		if err != nil {
+			return err
+		}
+
+		// do not include ioutil.TempDir name
+		relativeFilePathArr := strings.Split(relativeFilePath, string(filepath.Separator))
+		relativeFilePath = path.Join(relativeFilePathArr[1:]...)
+
+		archivePath := path.Join(filepath.SplitList(relativeFilePath)...)
+
+		fmt.Println(archivePath)
+
+		file, err := os.Open(filePath)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+
+		zipFileWriter, err := zipWriter.Create(archivePath)
+		if err != nil {
+			return err
+		}
+
+		_, err = io.Copy(zipFileWriter, file)
+		return err
+	})
 }
 
 // MarshalIndent is like json.MarshalIndent but applies Slack's weird JSON
@@ -112,7 +155,7 @@ func dumpUsers(api *slack.Client, dir string) {
 
 	for _, im := range ims {
 		for _, user := range users {
-			if im.User == user.ID{
+			if im.User == user.ID {
 				fmt.Println("dump DM with " + user.Name)
 				dumpChannel(api, dir, im.ID, user.Name, "dm")
 			}
