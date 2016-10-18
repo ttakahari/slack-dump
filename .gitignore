@@ -25,3 +25,5 @@ _testmain.go
 *.zip
 slack-dum*
 slackdum*
+
+.vscode/
