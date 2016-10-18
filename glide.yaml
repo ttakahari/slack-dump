@@ -1,0 +1,5 @@
+package: github.com/PyYoshi/slack-dump
+import:
+- package: github.com/codegangsta/cli
+- package: github.com/jhoonb/archivex
+- package: github.com/nlopes/slack

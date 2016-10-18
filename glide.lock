@@ -1,0 +1,14 @@
+hash: 11df14a516cce4fa2961c2b43dfde6783ebfec1755187c7de8c916fa933310b0
+updated: 2016-10-18T15:35:44.097286509+09:00
+imports:
+- name: github.com/codegangsta/cli
+  version: 55f715e28c46073d0e217e2ce8eb46b0b45e3db6
+- name: github.com/jhoonb/archivex
+  version: b669bdadd30ace382d6e082dfcc8e33b926db1a1
+- name: github.com/nlopes/slack
+  version: a1a63712460a18dbe828ae915f954a0f214f3d8e
+- name: golang.org/x/net
+  version: 8b4af36cd21a1f85a7484b49feb7c79363106d8e
+  subpackages:
+  - websocket
+testImports: []
