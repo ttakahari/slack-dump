@@ -38,8 +38,20 @@ func main() {
 			EnvVar: "SLACK_API_TOKEN",
 		},
 	}
-	app.Author = "Joe Fitzgerald, Sunyong Lim, Yoshihiro Misawa"
-	app.Email = "jfitzgerald@pivotal.io, dicebattle@gmail.com, myoshi321go@gmail.com"
+	app.Authors = []cli.Author{
+		cli.Author{
+			Name:  "Joe Fitzgerald",
+			Email: "jfitzgerald@pivotal.io",
+		},
+		cli.Author{
+			Name:  "Sunyong Lim",
+			Email: "dicebattle@gmail.com",
+		},
+		cli.Author{
+			Name:  "Yoshihiro Misawa",
+			Email: "myoshi321go@gmail.com",
+		},
+	}
 	app.Version = "1.0.0"
 	app.Action = func(c *cli.Context) {
 		token := c.String("token")
