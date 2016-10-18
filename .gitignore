@@ -27,3 +27,4 @@ slack-dum*
 slackdum*
 
 .vscode/
+dist/
