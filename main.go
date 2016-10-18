@@ -133,6 +133,8 @@ func archive(inFilePath string) {
 		_, err = io.Copy(zipFileWriter, file)
 		return err
 	})
+
+	check(err)
 }
 
 // MarshalIndent is like json.MarshalIndent but applies Slack's weird JSON
