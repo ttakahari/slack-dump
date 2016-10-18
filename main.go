@@ -38,9 +38,9 @@ func main() {
 			EnvVar: "SLACK_API_TOKEN",
 		},
 	}
-	app.Author = "Joe Fitzgerald, Sunyong Lim"
-	app.Email = "jfitzgerald@pivotal.io, dicebattle@gmail.com"
-	app.Version = "0.0.2"
+	app.Author = "Joe Fitzgerald, Sunyong Lim, Yoshihiro Misawa"
+	app.Email = "jfitzgerald@pivotal.io, dicebattle@gmail.com, myoshi321go@gmail.com"
+	app.Version = "1.0.0"
 	app.Action = func(c *cli.Context) {
 		token := c.String("token")
 		if token == "" {
