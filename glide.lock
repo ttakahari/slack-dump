@@ -1,10 +1,8 @@
-hash: 11df14a516cce4fa2961c2b43dfde6783ebfec1755187c7de8c916fa933310b0
-updated: 2016-10-18T15:35:44.097286509+09:00
+hash: 9e59cb7d36be86be1a7e0b611c4680f03fa0fe497c3096f962f007919f7964da
+updated: 2016-10-18T16:49:49.380103141+09:00
 imports:
 - name: github.com/codegangsta/cli
   version: 55f715e28c46073d0e217e2ce8eb46b0b45e3db6
-- name: github.com/jhoonb/archivex
-  version: b669bdadd30ace382d6e082dfcc8e33b926db1a1
 - name: github.com/nlopes/slack
   version: a1a63712460a18dbe828ae915f954a0f214f3d8e
 - name: golang.org/x/net
