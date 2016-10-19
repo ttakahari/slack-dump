@@ -37,6 +37,12 @@ func main() {
 			Usage:  "a Slack API token: (see: https://api.slack.com/web)",
 			EnvVar: "SLACK_API_TOKEN",
 		},
+		cli.StringFlag{
+			Name:   "output, o",
+			Value:  "",
+			Usage:  "Output directory path. Default: current directory path",
+			EnvVar: "",
+		},
 	}
 	app.Authors = []cli.Author{
 		cli.Author{
@@ -61,6 +67,14 @@ func main() {
 			cli.ShowAppHelp(c)
 			os.Exit(2)
 		}
+
+		outputDir := c.String("output")
+		if outputDir == "" {
+			pwd, err := os.Getwd()
+			check(err)
+			outputDir = pwd
+		}
+
 		rooms := c.Args()
 		api := slack.New(token)
 		_, err := api.AuthTest()
@@ -79,18 +93,15 @@ func main() {
 		// Dump Channels and Groups
 		dumpRooms(api, dir, rooms)
 
-		archive(dir)
+		archive(dir, outputDir)
 	}
 
 	app.Run(os.Args)
 }
 
-func archive(inFilePath string) {
-	pwd, err := os.Getwd()
-	check(err)
-
+func archive(inFilePath, outputDir string) {
 	ts := time.Now().Format("20060102150405")
-	outZipPath := path.Join(pwd, fmt.Sprintf("slackdump-%s.zip", ts))
+	outZipPath := path.Join(outputDir, fmt.Sprintf("slackdump-%s.zip", ts))
 
 	outZip, err := os.Create(outZipPath)
 	check(err)
