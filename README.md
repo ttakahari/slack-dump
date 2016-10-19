@@ -13,7 +13,7 @@ USAGE:
    main [global options] command [command options] [arguments...]
    
 VERSION:
-   1.1.0
+   1.1.1
    
 AUTHOR(S):
    Joe Fitzgerald <jfitzgerald@pivotal.io> Sunyong Lim <dicebattle@gmail.com> Yoshihiro Misawa <myoshi321go@gmail.com> 
