@@ -1,4 +1,4 @@
-VERSION := $(shell git describe --tags)
+VERSION := $(shell git describe --abbrev=0)
 
 gox: clean
 	gox -verbose \
