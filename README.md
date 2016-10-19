@@ -13,7 +13,7 @@ USAGE:
    main [global options] command [command options] [arguments...]
    
 VERSION:
-   1.0.1
+   1.1.0
    
 AUTHOR(S):
    Joe Fitzgerald <jfitzgerald@pivotal.io> Sunyong Lim <dicebattle@gmail.com> Yoshihiro Misawa <myoshi321go@gmail.com> 
@@ -22,9 +22,10 @@ COMMANDS:
      help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --token value, -t value  a Slack API token: (see: https://api.slack.com/web) [$SLACK_API_TOKEN]
-   --help, -h               show help
-   --version, -v            print the version
+   --token value, -t value   a Slack API token: (see: https://api.slack.com/web) [$SLACK_API_TOKEN]
+   --output value, -o value  Output directory path. Default: current directory path
+   --help, -h                show help
+   --version, -v             print the version
 
 ```
 
