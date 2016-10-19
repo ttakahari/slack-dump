@@ -75,6 +75,11 @@ func main() {
 			outputDir = pwd
 		}
 
+		// create directory if outputDir does not exists
+		if _, err := os.Stat(outputDir); os.IsNotExist(err) {
+			os.MkdirAll(outputDir, 0755)
+		}
+
 		rooms := c.Args()
 		api := slack.New(token)
 		_, err := api.AuthTest()
