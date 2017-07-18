@@ -3,6 +3,7 @@ package main
 import (
 	"archive/zip"
 	"bytes"
+	"compress/flate"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -114,6 +115,11 @@ func archive(inFilePath, outputDir string) {
 
 	zipWriter := zip.NewWriter(outZip)
 	defer zipWriter.Close()
+
+	// Set compression level: flate.BestCompression
+	zipWriter.RegisterCompressor(zip.Deflate, func(out io.Writer) (io.WriteCloser, error) {
+		return flate.NewWriter(out, flate.BestCompression)
+	})
 
 	basePath := filepath.Dir(inFilePath)
 
