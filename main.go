@@ -284,7 +284,7 @@ func dumpGroups(api *slack.Client, dir string, rooms []string) []slack.Group {
 	}
 
 	for _, group := range groups {
-		fmt.Println("dump channel " + group.Name)
+		fmt.Println("dump channel (group) " + group.Name)
 		dumpChannel(api, dir, group.ID, group.Name, "group")
 	}
 
@@ -349,21 +349,22 @@ func fetchGroupHistory(api *slack.Client, ID string) []slack.Message {
 	history, err := api.GetGroupHistory(ID, historyParams)
 	check(err)
 	messages := history.Messages
-	latest := messages[len(messages)-1].Timestamp
-	for {
-		if history.HasMore != true {
-			break
-		}
+	if len(messages) > 0 {
+		latest := messages[len(messages)-1].Timestamp
+		for {
+			if history.HasMore != true {
+				break
+			}
 
-		historyParams.Latest = latest
-		history, err = api.GetGroupHistory(ID, historyParams)
-		check(err)
-		length := len(history.Messages)
-		if length > 0 {
-			latest = history.Messages[length-1].Timestamp
-			messages = append(messages, history.Messages...)
+			historyParams.Latest = latest
+			history, err = api.GetGroupHistory(ID, historyParams)
+			check(err)
+			length := len(history.Messages)
+			if length > 0 {
+				latest = history.Messages[length-1].Timestamp
+				messages = append(messages, history.Messages...)
+			}
 		}
-
 	}
 
 	return messages
