@@ -59,7 +59,7 @@ func main() {
 			Email: "myoshi321go@gmail.com",
 		},
 	}
-	app.Version = "1.1.2"
+	app.Version = "1.1.3"
 	app.Action = func(c *cli.Context) {
 		token := c.String("token")
 		if token == "" {
