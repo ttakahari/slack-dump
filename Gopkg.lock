@@ -2,26 +2,26 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/codegangsta/cli"
+  name = "github.com/gorilla/websocket"
   packages = ["."]
-  revision = "4b90d79a682b4bf685762c7452db20f2a676ecb2"
+  revision = "ea4d1f681babbce9545c9c5f3d5194a789c89f5b"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
   name = "github.com/nlopes/slack"
   packages = ["."]
-  revision = "ca8436d76f805ec1e682eaae2de3c3a9bc894b0f"
+  revision = "921a31ba7374bbc3623a5327e1f965628d1d6108"
 
 [[projects]]
   branch = "master"
-  name = "golang.org/x/net"
-  packages = ["websocket"]
-  revision = "b3756b4b77d7b13260a0a2ec658753cf48922eac"
+  name = "github.com/urfave/cli"
+  packages = ["."]
+  revision = "8e01ec4cd3e2d84ab2fe90d8210528ffbb06d8ff"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "81fb30b2cc327d598e9b707c26dc440781a3783249e75115dec8d7b2c5b076d4"
+  inputs-digest = "9dc1e75824e5b6b1697b4be50723d03c19d372d251d3798157cd671e19e33e56"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -17,8 +17,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/codegangsta/cli"
 	"github.com/nlopes/slack"
+	"github.com/urfave/cli"
 )
 
 func check(e error) {

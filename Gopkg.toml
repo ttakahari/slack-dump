@@ -23,7 +23,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/codegangsta/cli"
+  name = "github.com/urfave/cli"
 
 [[constraint]]
   branch = "master"
