@@ -185,18 +185,18 @@ func dumpUsers(api *slack.Client, dir string) {
 	err = ioutil.WriteFile(path.Join(dir, "users.json"), data, 0644)
 	check(err)
 
-	fmt.Println("dump direct message")
-	ims, err := api.GetIMChannels()
-	//fmt.Println(ims)
+	// fmt.Println("dump direct message")
+	// ims, err := api.GetIMChannels()
+	// //fmt.Println(ims)
 
-	for _, im := range ims {
-		for _, user := range users {
-			if im.User == user.ID {
-				fmt.Println("dump DM with " + user.Name)
-				dumpChannel(api, dir, im.ID, user.Name, "dm")
-			}
-		}
-	}
+	// for _, im := range ims {
+	// 	for _, user := range users {
+	// 		if im.User == user.ID {
+	// 			fmt.Println("dump DM with " + user.Name)
+	// 			dumpChannel(api, dir, im.ID, user.Name, "dm")
+	// 		}
+	// 	}
+	// }
 }
 
 func dumpRooms(api *slack.Client, dir string, rooms []string) {
